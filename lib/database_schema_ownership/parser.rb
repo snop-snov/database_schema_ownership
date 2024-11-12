@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module DatabaseSchemaOwnership
-  class Parser
+  class Parser # :nodoc:
     def parse
       entities = []
 
-      schema = File.open("db/schema.rb").read
+      schema = File.read("db/schema.rb")
 
       schema.scan(/\n*(\s+create_table "([^"]*)".*?end)/m).each do |table|
         entity = DatabaseSchemaOwnership::Entity.new
