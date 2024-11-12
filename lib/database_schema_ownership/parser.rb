@@ -2,21 +2,13 @@
 
 module DatabaseSchemaOwnership
   class Parser # :nodoc:
-    def parse
-      entities = []
-
-      schema = File.read("db/schema.rb")
-
-      schema.scan(/\n*(\s+create_table "([^"]*)".*?end)/m).each do |table|
-        entity = DatabaseSchemaOwnership::Entity.new
-
-        entity.table = table[0]
-        entity.name = table[1]
-
-        entities << entity
+    def self.for(extension)
+      case extension
+      when ".rb" then RubyParser
+      when ".sql" then SqlParser
+      else
+        raise ArgumentError, "Unsupported schema extension: #{extension}"
       end
-
-      entities
     end
   end
 end

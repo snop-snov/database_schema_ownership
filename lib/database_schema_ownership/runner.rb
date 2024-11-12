@@ -3,17 +3,29 @@
 module DatabaseSchemaOwnership
   # :nodoc
   class Runner
+    attr_reader :schema_path, :folder_path, :schema_extension
+
+    def initialize(schema_path = "db/schema.rb", folder_path = "db/database_schema_ownership")
+      @schema_path = schema_path
+      @folder_path = folder_path
+      @schema_extension = File.extname(schema_path)
+    end
+
     def run
-      # parse the schema file
-      parser = DatabaseSchemaOwnership::Parser.new
+      parser = DatabaseSchemaOwnership::Parser.for(schema_extension).new(schema_path)
       entities = parser.parse
 
-      # create directory
-      FileUtils.mkdir_p("db/database_schema_ownership") if entities.any?
-      # split tables between files
+      FileUtils.mkdir_p(folder_path) if entities.any?
+
       entities.each do |entity|
-        File.write("db/database_schema_ownership/#{entity.name}.rb", entity.table)
+        File.write(file_name(entity), entity.table)
       end
+    end
+
+    private
+
+    def file_name(entity)
+      "#{folder_path}/#{entity.name}#{schema_extension}"
     end
   end
 end
