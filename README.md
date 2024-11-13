@@ -1,28 +1,40 @@
 # DatabaseSchemaOwnership
 
-TODO: Delete this and the text below, and describe your gem
+The project's main goal is to help you manage the ownership of the database schema in your Ruby application.
+It has a one-line configuration and it will take care of the rest.
+You can use the DSL to satisfy your custom needs for more complex scenarios.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/database_schema_ownership`. To experiment with that code, run `bin/console` for an interactive prompt.
+## How it works?
+
+GitHub Code Ownership provides an easy way to manage the code ownership per file.
+This means that splitting the schema file into multiple files and assigning ownership to specific team members will help you control the schema.
+Therefore, the only gem that Gem does is split the schema file into multiple files to assign ownership to the specific team members.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Add this line to your application's Gemfile:
 
-Install the gem and add to the application's Gemfile by executing:
-
-```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+```ruby
+gem 'database_consistency', group: :development, require: "database_schema_ownership/railtie"
 ```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+That's it! The gem will automatically adjust the rake tasks for you. 
+That means, every time you dump your schema, the gem will create the ownership files for you.
 
-```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+## Custom configuration
+
+*Note:* In case you don't need automatically adjusted rake tasks, you can omit the require:
+
+```ruby
+gem 'database_consistency', group: :development
 ```
 
-## Usage
-
-TODO: Write usage instructions here
+And simply run the following command to create the database ownership files:
+```ruby
+# schema_path - "db/schema.rb" or "db/structure.sql" or any other path
+# folder_path - "db/database_schema_ownership" or any other path to store the ownership files
+DatabaseSchemaOwnership::Runner.new(schema_path, folder_path).run
+```
 
 ## Development
 
@@ -32,12 +44,12 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/database_schema_ownership. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/database_schema_ownership/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/djezzzl/database_schema_ownership. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/djezzzl/database_schema_ownership/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+Copyright (c) Evgeniy Demin. See [LICENSE.txt](https://github.com/djezzzl/database_schema_ownership/blob/master/LICENSE.txt) for further details.
 
 ## Code of Conduct
 
-Everyone interacting in the DatabaseSchemaOwnership project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/database_schema_ownership/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the DatabaseSchemaOwnership project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/djezzzl/database_schema_ownership/blob/master/CODE_OF_CONDUCT.md).
