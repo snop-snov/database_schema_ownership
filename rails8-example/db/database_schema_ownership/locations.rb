@@ -4,3 +4,4 @@
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_locations_on_user_id"
   end
+  add_foreign_key "locations", "users"

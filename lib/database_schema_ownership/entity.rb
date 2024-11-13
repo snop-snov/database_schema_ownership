@@ -2,6 +2,11 @@
 
 module DatabaseSchemaOwnership
   class Entity # :nodoc:
-    attr_accessor :name, :table
+    attr_reader :name, :metadata
+
+    def initialize(name, metadata)
+      @name = name
+      @metadata = metadata
+    end
   end
 end

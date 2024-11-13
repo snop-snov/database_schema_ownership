@@ -10,5 +10,15 @@ module DatabaseSchemaOwnership
         raise ArgumentError, "Unsupported schema extension: #{extension}"
       end
     end
+
+    attr_accessor :schema_path
+
+    def initialize(schema_path)
+      @schema_path = schema_path
+    end
+
+    def schema
+      File.read(schema_path)
+    end
   end
 end

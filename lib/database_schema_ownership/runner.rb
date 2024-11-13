@@ -17,15 +17,23 @@ module DatabaseSchemaOwnership
 
       FileUtils.mkdir_p(folder_path) if entities.any?
 
-      entities.each do |entity|
-        File.write(file_name(entity), entity.table)
+      grouped = entities.each_with_object({}) do |entity, hash|
+        if hash[entity.name]
+          hash[entity.name] += "\n#{entity.metadata}"
+        else
+          hash[entity.name] = entity.metadata
+        end
+      end
+
+      grouped.each do |name, metadata|
+        File.write(file_name(name), metadata)
       end
     end
 
     private
 
-    def file_name(entity)
-      "#{folder_path}/#{entity.name}#{schema_extension}"
+    def file_name(name)
+      "#{folder_path}/#{name}#{schema_extension}"
     end
   end
 end
