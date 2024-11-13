@@ -15,7 +15,7 @@ Therefore, the only gem that Gem does is split the schema file into multiple fil
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'database_consistency', group: :development, require: "database_schema_ownership/railtie"
+gem 'database_schema_ownership', group: :development, require: "database_schema_ownership/railtie"
 ```
 
 That's it! The gem will automatically adjust the rake tasks for you. 
@@ -26,7 +26,7 @@ That means, every time you dump your schema, the gem will create the ownership f
 *Note:* In case you don't need automatically adjusted rake tasks, you can omit the require:
 
 ```ruby
-gem 'database_consistency', group: :development
+gem 'database_schema_ownership', group: :development
 ```
 
 And simply run the following command to create the database ownership files:
