@@ -3,7 +3,7 @@ require:
   - rubocop-rake
 
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 2.5
   NewCops: enable
   Exclude:
     - 'rails8-example/**/*'
