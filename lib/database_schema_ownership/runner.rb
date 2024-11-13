@@ -3,12 +3,16 @@
 module DatabaseSchemaOwnership
   # :nodoc
   class Runner
+    RUBY_SCHEMA_PATH = "db/schema.rb"
+    SQL_SCHEMA_PATH = "db/structure.sql"
+    OWNERSHIP_PATH = "db/database_schema_ownership"
+
     attr_reader :schema_path, :folder_path, :schema_extension
 
-    def initialize(schema_path = "db/schema.rb", folder_path = "db/database_schema_ownership")
-      @schema_path = schema_path
+    def initialize(schema_path = nil, folder_path = OWNERSHIP_PATH)
+      @schema_path = schema_path || find_schema_path
       @folder_path = folder_path
-      @schema_extension = File.extname(schema_path)
+      @schema_extension = File.extname(@schema_path)
     end
 
     def run
@@ -34,6 +38,16 @@ module DatabaseSchemaOwnership
 
     def file_name(name)
       "#{folder_path}/#{name}#{schema_extension}"
+    end
+
+    def find_schema_path
+      if File.exist?(RUBY_SCHEMA_PATH)
+        RUBY_SCHEMA_PATH
+      elsif File.exist?(SQL_SCHEMA_PATH)
+        SQL_SCHEMA_PATH
+      else
+        raise "Schema file not found"
+      end
     end
   end
 end
