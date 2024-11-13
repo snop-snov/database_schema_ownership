@@ -7,7 +7,5 @@ require_relative "database_schema_ownership/parser/sql_parser"
 require_relative "database_schema_ownership/parser"
 require_relative "database_schema_ownership/runner"
 
-require_relative "database_schema_ownership/railtie" if defined?(Rails)
-
 module DatabaseSchemaOwnership # :nodoc:
 end
