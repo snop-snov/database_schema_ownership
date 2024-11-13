@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module DatabaseSchemaOwnership
   class Parser
-    class SqlParser < Parser
+    class SqlParser < Parser # :nodoc:
       def parse
         parse_tables + parse_indexes
       end

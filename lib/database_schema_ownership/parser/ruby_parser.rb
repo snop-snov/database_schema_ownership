@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DatabaseSchemaOwnership
   class Parser
     class RubyParser < Parser # :nodoc:

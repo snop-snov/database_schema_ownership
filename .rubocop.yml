@@ -7,6 +7,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'rails8-example/**/*'
+    - 'rails8-sql-example/**/*'
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes

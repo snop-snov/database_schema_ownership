@@ -16,18 +16,11 @@ module DatabaseSchemaOwnership
     end
 
     def run
-      parser = DatabaseSchemaOwnership::Parser.for(schema_extension).new(schema_path)
       entities = parser.parse
 
       FileUtils.mkdir_p(folder_path) if entities.any?
 
-      grouped = entities.each_with_object({}) do |entity, hash|
-        if hash[entity.name]
-          hash[entity.name] += "\n#{entity.metadata}"
-        else
-          hash[entity.name] = entity.metadata
-        end
-      end
+      grouped = group_entities(entities)
 
       grouped.each do |name, metadata|
         File.write(file_name(name), metadata)
@@ -35,6 +28,20 @@ module DatabaseSchemaOwnership
     end
 
     private
+
+    def group_entities(entities)
+      entities.each_with_object({}) do |entity, hash|
+        if hash[entity.name]
+          hash[entity.name] += "\n#{entity.metadata}"
+        else
+          hash[entity.name] = entity.metadata
+        end
+      end
+    end
+
+    def parser
+      DatabaseSchemaOwnership::Parser.for(schema_extension).new(schema_path)
+    end
 
     def file_name(name)
       "#{folder_path}/#{name}#{schema_extension}"
