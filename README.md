@@ -20,6 +20,10 @@ GitHub Code Ownership provides an easy way to manage the code ownership per file
 This means that splitting the schema file into multiple files and assigning ownership to specific team members will help you control the schema.
 This is where the gem comes into play. It creates such files for you that you can easily control. 
 
+You can check Rails 8 examples:
+- [SQL format](https://github.com/djezzzl/database_schema_ownership/tree/master/rails8-example/db/database_schema_ownership)
+- [Ruby format](https://github.com/djezzzl/database_schema_ownership/tree/master/rails8-sql-example/db/database_schema_ownership)
+
 ## Installation
 
 Add this line to your application's Gemfile:
