@@ -8,11 +8,17 @@ The project's main goal is to help you manage the ownership of the database sche
 It has a one-line configuration and it will take care of the rest.
 You can use the DSL to satisfy your custom needs for more complex scenarios.
 
+Follow me and stay tuned for the updates:
+- [LinkedIn](https://www.linkedin.com/in/evgeniydemin/)
+- [Medium](https://evgeniydemin.medium.com/)
+- [Twitter](https://twitter.com/EvgeniyDemin/)
+- [GitHub](https://github.com/djezzzl)
+
 ## How it works?
 
 GitHub Code Ownership provides an easy way to manage the code ownership per file.
 This means that splitting the schema file into multiple files and assigning ownership to specific team members will help you control the schema.
-Therefore, the only gem that Gem does is split the schema file into multiple files to assign ownership to the specific team members.
+This is where the gem comes into play. It creates such files for you that you can easily control. 
 
 ## Installation
 
