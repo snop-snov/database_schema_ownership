@@ -1,4 +1,4 @@
-name: Rubocop
+name: Tests
 
 on:
   pull_request:
