@@ -2,7 +2,7 @@
 
 require_relative "lib/database_schema_ownership/version"
 
-Gem::Specification.new do |spec|
+Gem::Specification.new do |spec| # rubocop:disable Gemspec/RequireMFA
   spec.name = "database_schema_ownership"
   spec.version = DatabaseSchemaOwnership::VERSION
   spec.authors = ["Evgeniy Demin"]

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    database_schema_ownership (1.0.0)
+    database_schema_ownership (1.1.0)
       activerecord
 
 GEM
