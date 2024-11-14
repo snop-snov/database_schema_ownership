@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class TestRubyParser < Minitest::Test
+class TestSqlParser < Minitest::Test
   def schema_path
     "test/parser/schema.sql"
   end
@@ -23,6 +23,27 @@ class TestRubyParser < Minitest::Test
       DatabaseSchemaOwnership::Entity.new("locations", <<~SCHEMA
         CREATE INDEX "index_locations_on_user_id" ON "locations" ("user_id") /*application='Rails8Example'*/;
       SCHEMA
+      ),
+      DatabaseSchemaOwnership::Entity.new("public.administrators", <<~SCHEMA
+        CREATE TABLE public.administrators (
+            id integer NOT NULL,
+            name character varying NOT NULL,
+            user_id integer
+        );
+      SCHEMA
+      ),
+      DatabaseSchemaOwnership::Entity.new("public.administrators", <<~SCHEMA
+        CREATE INDEX administrators_name_index ON public.administrators USING btree (name);
+      SCHEMA
+      ),
+      DatabaseSchemaOwnership::Entity.new("public.administrators", <<~SCHEMA
+        CREATE UNIQUE INDEX administrators_name_index ON public.administrators USING btree (name);
+      SCHEMA
+      ),
+      DatabaseSchemaOwnership::Entity.new("public.administrators", <<~SCHEMA
+        ALTER TABLE ONLY public.administrators
+            ADD CONSTRAINT fk_rails_12345 FOREIGN KEY (user_id) REFERENCES public.users(id);
+      SCHEMA
       )
     ]
   end
@@ -30,7 +51,9 @@ class TestRubyParser < Minitest::Test
   def test_parse
     parsed_schema = DatabaseSchemaOwnership::Parser::SqlParser.new(schema_path).parse
 
-    assert_equal expected_entities.map(&:name), parsed_schema.map(&:name)
-    assert_equal expected_entities.map(&:metadata), parsed_schema.map(&:metadata)
+    expected_entities.each_with_index do |expected_entity, index|
+      assert_equal(expected_entity.name, parsed_schema[index].name)
+      assert_equal(expected_entity.metadata, parsed_schema[index].metadata)
+    end
   end
 end

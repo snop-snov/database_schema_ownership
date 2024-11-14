@@ -5,8 +5,15 @@ module DatabaseSchemaOwnership
     class SqlParser < Parser # :nodoc:
       def rules
         [
+          # ActiveRecord 8
           /(CREATE TABLE IF NOT EXISTS "([^"]*)"[^;]*;)/m,
-          /(CREATE INDEX .* ON "([^"]*)"[^;]*;)/
+          /(CREATE INDEX .* ON "([^"]*)"[^;]*;)/,
+
+          # early versions
+          /(CREATE TABLE (\S+) \([^;]*;)/m,
+          /(CREATE INDEX \S+ ON (\S+) USING [^;]*;)/,
+          /(CREATE UNIQUE INDEX \S+ ON (\S+) USING [^;]*;)/,
+          /(ALTER TABLE ONLY (\S+)[^;]*;)/m
         ]
       end
     end
