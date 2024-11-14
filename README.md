@@ -17,8 +17,66 @@ Follow me and stay tuned for the updates:
 ## How it works?
 
 GitHub Code Ownership provides an easy way to manage the code ownership per file.
-This means that splitting the schema file into multiple files and assigning ownership to specific team members will help you control the schema.
-This is where the gem comes into play. It creates such files for you that you can easily control. 
+So, let's say you have a `CODEOWNERS` file under `.github` folder in your repository.
+
+```
+See https://help.github.com/articles/about-codeowners/
+# for more info about CODEOWNERS file
+
+db/schema.rb @schema-owners-team
+```
+
+Unfortunately, you can't assign a team per table. You can only assign a team per file.
+If your schema would be split into multiple files, you could assign a team per file.
+This is where the gem comes into play. It creates such files for you that you can easily control with Github Codeowners.
+
+Let's look with an example. You have the following schema:
+```ruby
+ActiveRecord::Schema[8.0].define(version: 2024_11_12_133340) do
+  create_table "locations", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_locations_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "locations", "users"
+end
+```
+
+The gem will create the following ownership files for you on every schema change:
+- `db/database_schema_ownership/locations.rb`
+- `db/database_schema_ownership/users.rb`
+
+```ruby
+# db/database_schema_ownership/locations.rb
+create_table "locations", force: :cascade do |t|
+  t.integer "user_id", null: false
+  t.datetime "created_at", null: false
+  t.datetime "updated_at", null: false
+  t.index ["user_id"], name: "index_locations_on_user_id"
+end
+add_foreign_key "locations", "users"
+
+# db/database_schema_ownership/users.rb
+create_table "users", force: :cascade do |t|
+  t.string "name"
+  t.datetime "created_at", null: false
+  t.datetime "updated_at", null: false
+end
+```
+
+Thus, now you can easily assign the ownership to the teams:
+```
+db/database_schema_ownership/locations.rb @geo-team
+db/database_schema_ownership/users.rb @users-team
+```
 
 You can check Rails 8 examples:
 - [SQL format](https://github.com/djezzzl/database_schema_ownership/tree/master/rails8-example/db/database_schema_ownership)
