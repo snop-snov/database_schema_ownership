@@ -1,5 +1,9 @@
 # DatabaseSchemaOwnership
 
+[![](https://badge.fury.io/rb/database_schema_ownership.svg)](https://badge.fury.io/rb/database_schema_ownership)
+[![](https://github.com/djezzzl/database_schema_ownership/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/djezzzl/database_schema_ownership/actions/workflows/tests.yml?query=event%3Aschedule)
+[![](https://github.com/djezzzl/database_schema_ownership/actions/workflows/rubocop.yml/badge.svg?branch=master)](https://github.com/djezzzl/database_schema_ownership/actions/workflows/rubocop.yml?query=event%3Aschedule)
+
 The project's main goal is to help you manage the ownership of the database schema in your Ruby application.
 It has a one-line configuration and it will take care of the rest.
 You can use the DSL to satisfy your custom needs for more complex scenarios.
