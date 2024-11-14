@@ -18,7 +18,15 @@ module DatabaseSchemaOwnership
     end
 
     def schema
-      File.read(schema_path)
+      @schema ||= File.read(schema_path)
+    end
+
+    def parse
+      rules.flat_map do |rule|
+        schema.scan(rule).map do |s|
+          DatabaseSchemaOwnership::Entity.new(s[1], "#{s[0]}\n")
+        end
+      end
     end
   end
 end

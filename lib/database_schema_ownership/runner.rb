@@ -32,7 +32,7 @@ module DatabaseSchemaOwnership
     def group_entities(entities)
       entities.each_with_object({}) do |entity, hash|
         if hash[entity.name]
-          hash[entity.name] += "\n#{entity.metadata}"
+          hash[entity.name] += entity.metadata
         else
           hash[entity.name] = entity.metadata
         end
